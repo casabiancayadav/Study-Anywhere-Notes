@@ -1,0 +1,71 @@
+       +---------------------------+
+       | Basic search and replace  |
+       +---------------------------+
+
+Options, but these are what you probably want: 
+-------------------------------------------------
+1-> :%s/foo/bar/g 
+	Find each occurrence of 'foo' (in all lines), and replace it with 'bar'. 
+
+2-> :s/foo/bar/g 
+	Find each occurrence of 'foo' (in the current line only), and replace it with 'bar'. 
+
+3-> :%s/foo/bar/gc 
+	Change each 'foo' to 'bar', but ask for confirmation first. 
+
+4-> :%s/\<foo\>/bar/gc 
+	Change only whole words exactly matching 'foo' to 'bar'; ask for confirmation
+
+	When using the c flag, you need to confirm for each match what to do. Vim will output something like:
+	replace with foobar (y/n/a/q/l/^E/^Y)? (where foobar is the replacement part of the :s/.../.../ command.
+	You can type y which means to substitute this match, n to skip this match, a to substitute this and
+	all remaining matches ("all" remaining matches), q to quit the command, l to substitute this match and quit (think of "last"),
+	^E to scroll the screen up by holding the Ctrl key and pressing E and ^Y to scroll the screen down by holding the Ctrl key and pressing Y. 
+
+
+To change the vim attributes permanently goto .vimrc file and write there. if forget Google it. it is simple nothing to worry about this.
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Colors can be change so that user experience and be good. i have change in my laptop. i downloaded newone's and using them right now.
+--------------------------------------------------------
+to see how to use them goto /usr/share/vim/vim81/colors
+---------------------------------------------------------
+here all colur files are of .vim extensions and just typying those file name we can get the color in our command line and use it
+
+:colorscheme colorFileName
+--------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

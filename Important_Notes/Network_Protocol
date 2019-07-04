@@ -1,0 +1,550 @@
+
+
+                                                        INTERNET PROTOCOL
+
+                                                            RFC 791
+    ==============================================================================================================================================
+
+ Notation:
+
+        FO    -  Fragment Offset
+        IHL   -  Internet Header Length
+        MF    -  More Fragments flag
+        TTL   -  Time To Live
+        NFB   -  Number of Fragment Blocks
+        TL    -  Total Length
+        TDL   -  Total Data Length
+        BUFID -  Buffer Identifier
+        RCVBT -  Fragment Received Bit Table
+        TLB   -  Timer Lower Bound
+
+>>> IP Datagram:
+
+                <--20-60->
+                   Bytes
+                +-+-+-+-+-+-+-+-+-+- 
+                | Header | Payload |
+                +-+-+-+-+-+-+-+-+-+- 
+                <----20-65,535------>
+                      Bytes
+                
+
+                Internet Header Format
+
+  A summary of the contents of the internet header follows:
+
+
+    0                   1                   2                   3
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |Version|  IHL  |Type of Service|          Total Length         |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |         Identification        |Flags|      Fragment Offset    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |  Time to Live |    Protocol   |         Header Checksum       |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                       Source Address                          |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                    Destination Address                        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                    Options                    |    Padding    |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+                    Example Internet Datagram Header
+
+
+
+ Note that each tick mark represents one bit position.
+
+1 octet = 8 bit = 1 Byte
+
+          An eight bit byte.
+
+Options
+          The internet header Options field may contain several options,
+          and each option may be several octets in length.
+
+*******************************************************************************************************************************************
+  
+>>Version:  4 bits
+
+    The Version field indicates the format of the internet header.  This
+    document describes version 4.
+
+*******************************************************************************************************************************************
+>>IHL:  4 bits
+    When a device receives a datagram, it needs to know when the header stops and the data starts.
+    To make the value of the header length (number of bytes) fit in a 4-bit header length,
+    the total length of the header is calculated as 4-byte words. The total length is divided by 4 
+    and the value is inserted in the field.
+
+    Internet Header Length is the length of the internet header in 32
+    bit words, and thus points to the beginning of the data.  Note that
+    the minimum value for a correct header is 5.
+
+    minimum bytes = 5*4 =20 Bytes
+    
+    maximum Bytes = 15*4 =60 Bytes
+    
+    To find the header length: 
+    -------------------------------
+    Length of header = IHL × 4
+    ----------------------------
+    
+*******************************************************************************************************************************************
+>>>>Type of Service:  8 bits
+    
+    In short it tell that how to handle the datagrame. All below is for more informations
+-----------------------------------------------------------------------------------------
+      Bits 0-2:  Precedence.
+      Bit    3:  0 = Normal Delay,      1 = Low Delay.
+      Bits   4:  0 = Normal Throughput, 1 = High Throughput.
+      Bits   5:  0 = Normal Relibility, 1 = High Relibility.
+      Bit  6-7:  Reserved for Future Use.
+
+         0     1     2     3     4     5     6     7
+      +-----+-----+-----+-----+-----+-----+-----+-----+
+      |                 |     |     |     |     |     |
+      |   PRECEDENCE    |  D  |  T  |  R  |  0  |  0  |
+      |                 |     |     |     |     |     |
+      +-----+-----+-----+-----+-----+-----+-----+-----+
+
+        Precedence
+
+          111 - Network Control
+          110 - Internetwork Control
+          101 - CRITIC/ECP
+          100 - Flash Override
+          011 - Flash
+          010 - Immediate
+          001 - Priority
+          000 - Routine
+
+*******************************************************************************************************************************************
+
+---------------------------
+ Total Length:  16 bits
+---------------------------
+
+    To find the length of the data:  
+    Length of data = total length − (HLEN) × 4
+    --------------------------------------------
+
+    Total Length is the length of the datagram, measured in octets,
+    including internet header and data.  This field allows the length of
+    a datagram to be up to 65,535 octets.  Such long datagrams are
+    impractical for most hosts and networks.  All hosts must be prepared
+    to accept datagrams of up to 576 octets (whether they arrive whole
+    or in fragments).  It is recommended that hosts only send datagrams
+    larger than 576 octets if they have assurance that the destination
+    is prepared to accept the larger datagrams.
+
+*******************************************************************************************************************************************
+----------------------------
+Identification:  16 bits
+-----------------------------
+
+    An identifying value assigned by the sender to aid in assembling the
+    fragments of a datagram.
+
+    helps the destination in reassembling all fragments having the same identification value into one datagram.
+
+*******************************************************************************************************************************************
+------------------
+Flags:  3 bits
+------------------
+    defines three flags:
+
+The leftmost bit is reserved (not used).
+
+The second bit (D bit) is called the do not fragment bit. If its value is 1, the machine must not fragment the datagram. If it cannot pass the datagram through any available physical network, it discards the datagram and sends an ICMP error message to the source host. If its value is 0, the datagram can be fragmented.
+
+The third bit (M bit) is called the more fragment bit. If its value is 1, it means there are more fragments after this one. If its value is 0, it means this is the last or only fragment.
+
+      Bit 0: reserved, must be zero
+      Bit 1: (DF) 0 = May Fragment,  1 = Don't Fragment.
+      Bit 2: (MF) 0 = Last Fragment, 1 = More Fragments.
+
+          0   1   2
+        +---+---+---+
+        |   | D | M |
+        | 0 | F | F |
+        +---+---+---+
+
+*******************************************************************************************************************************************
+
+---------------------------
+  Fragment Offset:  13 bits
+------------------------------
+    This field indicates where in the datagram this fragment belongs.
+
+: shows the relative position of this fragment with respect to the whole datagram, measured in units of 8 bytes.
+
+The fragment offset is measured in units of 8 octets (64 bits).  The
+    first fragment has offset zero.
+
+*******************************************************************************************************************************************
+--------------------------
+  Time to Live:  8 bits
+--------------------------
+: Due to some malfunctioning of routing protocols, a datagram may be circulating in the Internet without reaching the destination, This field is used to control the maximum number of hops (routers) visited by the datagram. Its value is approximately two times the maximum number of routers between any two hosts. Each router processes the datagram decrements this number by one. If this value, after being decremented, is zero, the router discards the datagram.
+
+    This field indicates the maximum time the datagram is allowed to
+    remain in the internet system.  If this field contains the value
+    zero, then the datagram must be destroyed.  This field is modified
+    in internet header processing.  The time is measured in units of
+    seconds, but since every module that processes a datagram must
+    decrease the TTL by at least one even if it process the datagram in
+    less than a second, the TTL must be thought of only as an upper
+    bound on the time a datagram may exist.  The intention is to cause
+    undeliverable datagrams to be discarded, and to bound the maximum
+    datagram lifetime.
+
+*******************************************************************************************************************************************
+i     ---------------------
+>>>>  Protocol:  8 bits
+      ---------------------
+
+    This field indicates the next level protocol used in the data
+    portion of the internet datagram.  The values for various protocols
+    are specified in "Assigned Numbers" [9].
+    
+    has the corresponding protocol number. Provides multiplexing at the source and demultiplexing at the destination.
+    
+    --------------
+    Multiplexing: 
+    --------------
+    
+        hen the payload is encapsulated in a datagram at the source IP, the
+        corresponding protocol number is inserted in this field; 
+    
+    ----------------
+    Demultiplexing:
+    ----------------
+
+        when the datagram arrives at the destination, the value of this field helps to define to which protocol the payload
+        should be delivered. 
+
+    ICMP = 01
+    IGMP = 02
+    TCP  = 06
+    UDP  = 17
+    OSPF = 89
+
+
+*******************************************************************************************************************************************
+
+-------------------------
+Header Checksum:  16 bits
+-------------------------
+
+IP is not a reliable protocol; it does not check whether the payload is corrupted.
+IP puts the burden of error checking of the payload on the protocol that owns the
+payload, such as UDP or TCP. However, IP add the datagram header. So its error-checking
+is the responsibility of IP.  Errors in the IP header can be a disaster, For example:
+
+- If the destination IP address is corrupted, the packet can be delivered to the wrong host.
+- If the protocol field is corrupted, the payload may be delivered to the wrong protocol.
+- If the fields related to the fragmentation are corrupted, the datagram cannot be reassembled correctly.
+
+Therefore, IP adds a header checksum field to check the header. since the value of some fields,
+such as TTL, may change from router to router, the checksum needs to be recalculated at each router.
+
+The checksum algorithm is:
+---------------------------
+
+      The checksum field is the 16 bit one's complement of the one's
+      complement sum of all 16 bit words in the header.  For purposes of
+      computing the checksum, the value of the checksum field is zero.
+
+    This is a simple to compute checksum and experimental evidence
+    indicates it is adequate, but it is provisional and may be replaced
+    by a CRC procedure, depending on further experience.
+
+*******************************************************************************************************************************************
+--------------------------------  
+ Source Address:  32 bits
+
+ Destination Address:  32 bits
+-----------------------------------
+
+define the IP address of the source and destination respectively. the value of these fields must
+remain unchanged during the time the IP datagram travels from the source host to the destination host.
+
+*******************************************************************************************************************************************
+--------------------
+ Options:  variable
+--------------------
+    The options may appear or not in datagrams.  They must be
+    implemented by all IP modules (host and gateways).  What is optional
+    is their transmission in any particular datagram, not their
+    implementation.
+
+    In some environments the security option may be required in all
+    datagrams.[SEE line no: ]
+
+    The option field is variable in length.  There may be zero or more
+    options.  There are two cases for the format of an option:
+
+      Case 1:  A single octet of option-type.
+
+      Case 2:  An option-type octet, an option-length octet, and the
+               actual option-data octets.
+
+    The option-length octet counts the option-type octet and the
+    option-length octet as well as the option-data octets.
+
+    The option-type octet is viewed as having 3 fields:
+
+      1 bit   copied flag,
+      2 bits  option class,
+      5 bits  option number.
+
+    The copied flag indicates that this option is copied into all
+    fragments on fragmentation.
+
+      0 = not copied
+      1 = copied
+
+    The option classes are:
+
+      0 = control
+      1 = reserved for future use
+      2 = debugging and measurement
+      3 = reserved for future use
+
+===============================================================================================================================================
+
+Q:1
+
+An IPv4 packet has arrived with the first 8 bits as (01000010)2 The receiver discards the packet. Why?.
+
+Solution
+There is an error in this packet. The 4 leftmost bits (0100)2 show the version, which is correct.
+The next 4 bits (0010)2 show an invalid header length (2 × 4 = 8). The minimum number of bytes in the header must be 20.
+The packet has been corrupted in transmission.
+
+
+Convert binary to decimal:                                                      
+ (0100)2  = (0x2^0) +(0x2^1) +(1×2^2) + (0×2^3)
+	      = (0x1) +(0x2) +(1×4) + (0×8)
+          = 4
+
+(0010)2  = (0x2^0) +(1x2^1) +(0×2^2) + (0×2^3)
+         = (0x1) +(1x2) +(0×4) + (0×8)
+         = 2
+
+Q:2
+
+In an IPv4 packet, the value of HLEN is (1000)2. How many bytes of options are being carried by this packet?
+
+Solution
+The HLEN value is 8, which means the total number of bytes in the header is 8 × 4, or 32 bytes.
+The first 20 bytes are the base header, the next 12 bytes are the options
+
+
+Convert binary to decimal:
+ (1000)2  = (0x20) +(0x21) +(0×22) + (1×23)
+	= (0x1) +(0x2) +(0×4) + (1×8)
+= 8
+
+Q:3
+
+
+In an IPv4 packet, the value of HLEN is 5, and the value of the total length field is (0028)16. How many bytes of data are being carried by this packet?
+
+Solution
+The HLEN value is 5, which means the total number of bytes in the header is 5 × 4, or 20 bytes (no options).
+ The total length is (0028)16 or 40 bytes, which means the packet is carrying 20 bytes of data (40 − 20).
+
+
+Convert Hexadecimal to decimal:
+ (0028)16  = (8x160) +(2x161) +(0×162) + (0×163)
+ 	 = (8x1) +(2x16) +(0×256) + (0×4096)
+= 8+32 = 40
+
+Q:4
+
+An IPv4 packet has arrived with the first few hexadecimal digits as shown.
+
+How many hops can this packet travel before being dropped? The data belong to what upper-layer protocol?
+Solution
+To find the time-to-live field, we skip 64 bits =(8 bytes)=(16 hexadecimal digits). 
+The time-to-live field is the ninth byte, which is (01)16.
+ (01)16  = (8x160) +(2x161) = (1x1) +(0x16) = 1
+This means the packet can travel only one hop.
+
+The protocol field is the next byte (02)16, which means that the upper-layer protocol is IGMP.
+
+Q:5
+
+Figure 19.4 shows an example of a checksum calculation for an IPv4 header without options. The header is divided into 16-bit sections. 
+All the sections are added and the sum is complemented after wrapping the leftmost digit. The result is inserted in the checksum field.
+
+Note that the calculation of wrapped sum and checksum can also be done as follows in hexadecimal:
+
+WrapperSum = Sum mod FFFF
+CheckSum = FFFF - WrapperSum
+
+Solution:
+---------
+
+    -------------------------------------
+   | 4 | 5      0 |       28            |
+    -------------------------------------
+   |    49,153    | 0 |    0            |
+    -------------------------------------
+   | 4     |  17  |         0  <<<<<<---|-------+
+    -------------------------------------       |
+   |    10.12.14.5                      |       |
+    -------------------------------------       |
+   |    12.6.7.9                        |       |
+    -------------------------------------       |
+                                                |
+                                                |   
+                                                |
+    4,5 and 0 --->>>    4 5 0 0                 |
+    28        --->>>    0 0 1 C                 |
+     1        --->>>    C 0 0 1                 |
+    0 and 0   --->>>    0 0 0 0                 |
+    4 and 17  --->>>    0 4 1 1                 |
+    0         --->>>    0 0 0 0                 |
+    10.12     --->>>    0 A 0 C                 |
+    14.5      --->>>    0 E 0 5                 |
+    12.6      --->>>    0 C 0 6                 |
+    7.9       --->>>    0 7 0 9                 |
+    ----------------------------                |
+    Sum       --->>>  1 3 4 4 E                 |
+    WrapperSum--->>>    3 4 4 E                 |
+    CheckSum  --->>>    C B B 0-----------------+
+
+============================================================================================================================================
+
+----------------
+Fragmentation:
+----------------
+A datagram can travel through different networks. Each router decapsulates the IP datagram from the frame it receives, processes it, and then encapsulates it in another frame.
+The format and size of the received frame depend on the protocol used by the physical network through which the frame has just traveled.
+The format and size of the sent frame depend on the protocol used by the physical network through which the frame is going to travel.
+For example, if a router connects a LAN to a WAN, it receives a frame in the LAN format and sends a frame in the WAN format.
+In order to make the IP protocol independent of the physical network, the designers decided to make the maximum length of the IP datagram equal to 65,535 bytes.  
+For a networks with a smaller MTU, we must divide the datagram to make it possible for it to pass through these networks. This is called fragmentation.
+A datagram can be fragmented by the source host or any router in the path. The reassembly of the datagram is done only by the destination host
+
+------------------------
+Maximum transfer Unite:
+------------------------
+
+
+                        +-+-+-+-+-+-+-+-+-+- 
+                        | Header | Payload |
+                        +-+-+-+-+-+-+-+-+-+- 
+                                    |
+                                    |
+                                   \|/
+                   +--------+---------------+----------+
+                   | Header | Frame Payload | Trainler |
+                   +--------+---------------+----------+
+
+When a datagram is encapsulated in a frame, the total size of the datagram must be less than this maximum size of the frame payload.
+
+The value of the MTU differs from one physical network protocol to another. For example, the value for a LAN is normally 1500 bytes, but for a WAN it can be larger or smaller
+
+----------------------
+Fragmentation example:                                             0000               1399       
+----------------------                                              +------------------+    
+                                                      +--------->>> | | | |--------| | |  Offset: 0000/8 =0
+                                                      |             +------------------+
+                                                      | 
+                Offset = 0000/8 =0                    |            1400                2799 
+            +-------------------------+               |             +-------------------+
+            | | | | ------------ |  | | ------------------------>>> | | | |---------| | | OFFset: 1400/8 =175
+            +-------------------------+               |             +-------------------+
+           0000                      3999             | 
+            Bytes                     Bytes           | 
+                                                      | 
+                                                      |            2800               3999       
+                                                      |             +------------------+    
+                                                      +--------->>> | | | |--------| | |  Offset: 2800/8 =350
+                                                                    +------------------+
+                                                                                  
+The Figure shows a datagram with a data size of 4000 bytes. The bytes in the original datagram are numbered 0 to 3999. It is fragmented into three fragments:
+1. First fragment carries bytes 0 to 1399.The offset for this datagram is 0/8 = 0.
+2. Second fragment carries bytes 1400 to 2799 the offset value for this fragment is 1400/8 = 175.
+3. Third fragment carries bytes 2800 to 3999The offset value for this fragment is 2800/8 = 350.
+
+Q:
+
+A packet has arrived with an M bit value of 0. Is this the first fragment, the last fragment, or a middle fragment? Do we know if the packet was fragmented?
+
+
+Solution
+If the M bit is 0, it means that there are no more fragments; the fragment is the last one.
+However, we cannot say if the original packet was fragmented or not. A nonfragmented packet is considered the last fragment.
+
+
+
+A packet has arrived with an M bit value of 19. Is this the first fragment, the last fragment, or a middle fragment? Do we know if the packet was fragmented?
+
+Solution
+If the M bit is 1, it means that there is at least one more fragment. This fragment can be the first one or a middle one, but not the last one. We don’t know if it is the first one or a middle one; we need more information (the value of the fragmentation offset).
+
+
+
+A packet has arrived with an M bit value of 1 and a fragmentation offset value of 0. Is this the first fragment, the last fragment, or a middle fragment?
+
+Solution
+Because the M bit is 1, it is either the first fragment or a middle one.
+Because the offset value is 0, it is the first fragment.
+
+
+A packet has arrived in which the offset value is 100. What is the number of the first byte? Do we know the number of the last byte?
+
+
+Solution
+To find the number of the first byte, we multiply the offset value by 8. This means that the first byte number is 800.
+We cannot determine the number of the last byte unless we know the length of the data
+
+
+
+A packet has arrived in which the offset value is 100, the value of HLEN is 5, and the value of the total length field is 100. What are the numbers of the first byte and the last byte?
+
+Solution
+The first byte number is 100 × 8 = 800.
+The total length is 100 bytes.
+The header length is (5 × 4) = 20 bytes.
+Which means that there are 80 bytes in this datagram.
+If the first byte number is 800, the last byte number must be 879.
+
+OPTIONS:
+----------
+The header of the IPv4 datagram is made of two parts, a fixed part and a variable part.
+The fixed part is 20 bytes long and was discussed in the previous section.
+The variable part is the options that can be a maximum of 40 bytes (in multiples of 4-bytes) to preserve the boundary of the header
+
+Security of IPv4 Datagrams:
+---------------------------
+The IPv4 protocol, as well as the whole Internet, was started when the Internet users trusted each other. No security was provided for the IPv4 protocol. Today, however, the situation is different; the Internet is not secure anymore. 
+Here we give a brief idea about the security issues in IP protocol and the solutions. 
+
+There are three security issues that are particularly applicable to the IP protocol:
+1. packet sniffing: An intruder may intercept an IP packet and make a copy of it (a passive attack attacker does not change the contents very difficult to detect  encryption of the packet can make the attacker’s effort useless.
+2. packet modification: The attacker intercepts the packet, changes its contents, and sends the new packet to the receiver The receiver can detect this type of attack by using a data integrity mechanism before opening and using the contents of the message.
+3. IP spoofing: An attacker can masquerade as somebody else and create an IP packet that carries the source address of another computer.
+
+IPSec
+The IP packets today can be protected from the previously mentioned attacks using a
+protocol called IPSec (IP Security), where it creates a connection-oriented service between two entities to exchange IP packets
+
+
+19.2   ICMPv4 
+The Internet Control Message Protocol version 4
+
+The IPv4 has no error-reporting or error-correcting mechanism.
+ The IP protocol also lacks a mechanism for host and management queries. 
+The Internet Control Message Protocol version 4 (ICMPv4) has been designed to compensate for the above two deficiencies.
+
+ICMP messages are divided into two broad categories:
+1. Error-reporting messages: report problems that a router or a host (destination) may encounter when it processes an IP packet.
+2. Query messages: which occur in pairs, help a host or a network manager get specific information from a router or another host. For example, nodes can discover their neighbors. Also, hosts can discover and learn about routers on their network and routers can help a node redirect its messages
+
