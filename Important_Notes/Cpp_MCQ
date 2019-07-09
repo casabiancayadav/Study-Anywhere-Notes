@@ -1,3 +1,118 @@
+    >>>>    SELF LEARNING   <<<<<
+    
+   Q: When do we use Initializer List in C++? 
+      Hint: [Search on GEEKSFORGEEKS]
+    
+    
+    
+    
+    =========================================================================================================    
+    
+    >>>>>>>>    CONSTRUCTOR     <<<<<<<<<
+
+    1)  In C++, if we do not write our own, then compiler automatically creates a default constructor,
+                                                                               -----------------------             
+        a copy constructor and a assignment operator for every class.
+        ------------------      ---------------------
+
+    2)  Unlike new, malloc() doesn't call constructor.If we replace malloc() with new, the constructor is called, 
+    
+        #include<iostream>
+        #include<stdlib.h>
+        using namespace std;
+         
+        class Test
+        {
+        public:
+           Test()
+           { cout << "Constructor called"; }
+        };
+         
+        int main()
+        {
+            Test *t = (Test *) malloc(sizeof(Test)); // it will not call constructor.
+            Test *s = new Test; // it will call constructor.
+            return 0;
+        }
+
+    3)  #include<iostream>
+        #include<string.h>
+        using namespace std;
+         
+        class String
+        {
+            char *str;
+        public:
+             String(const char *s);
+             void change(int index, char c) { str[index] = c; }
+             char *get() { return str; }
+        };
+         
+        String::String(const char *s)
+        {
+            int l = strlen(s);
+            str = new char[l+1];
+            strcpy(str, s);
+        }
+         
+        int main()
+        {
+           String s1("geeksQuiz");
+           String s2 = s1;
+           s1.change(0, 'G');
+           cout << s1.get() << " ";
+           cout << s2.get();
+        }
+
+    output:
+        GeeksQuiz GeeksQuiz
+
+     Since there is no copy constructor, the compiler creates a copy constructor.
+     The compiler created copy constructor does shallow copy in line " String s2 = s1;"
+                                                ----------------------------------------
+     So str pointers of both s1 and s2 point to the same location. There must be a user
+     -------------------------------------------------------------
+     defined copy constructor in classes with pointers ot dynamic memory allocation.
+
+4)  #include<iostream>
+using namespace std;
+  
+class Test
+{
+public:
+  Test();
+};
+  
+Test::Test()  {
+    cout << " Constructor Called. ";
+}
+  
+void fun() {
+  static Test t1;
+}
+  
+int main() {
+    cout << " Before fun() called. ";
+    fun();
+    fun();
+    cout << " After fun() called. ";  
+    return 0;
+}
+
+
+ioutput:
+
+Before fun() called. Constructor Called. After fun() called.
+Note that t is static in fun(), so constructor is called only once.
+
+
+
+
+
+
+
+
+====================================================================================================
 Q:1
 
     #include <iostream> 
@@ -290,6 +405,79 @@ int main()
 
 The above program compiles and runs fine because object is global. Global object‘s constructor executes before main() function and it’s destructor executes when main() terminates.
 Conclusion: When the class/struct name is main and whenever the local object is created it is mandatory to write class or struct when the object of class / and struct is created. Because C++ program execution begins from main () function. But this rule is not applied to global objects. Again, main isn’t a keyword but treat it as if it were.
+
+===========================================================================================
+
+#include <iostream> 
+using namespace std; 
+int main() 
+{ 
+    char array[3] = "abc"; // Error 
+    cout << array;     
+    return 0; 
+} 
+
+output:
+    It is not like C. Here size of string must be less then the size of array to accomodate
+    the null chararcter('\0').
+===========================================================================================
+
+#include <iostream> 
+using namespace std; 
+int main() 
+{ 
+    cout << sizeof('x'); 
+    cout << sizeof(char);     
+    return 0; 
+} 
+
+Output:
+1 1
+Explanation: It is notable that character constants are stored as character type in C++ but this is not the case in C.
+In ANSI C, the same program would produce the result — 
+
+4 1     // result when code is executed in C
+because character constants are promoted to int.
+
+===============================================================================================
+#include <iostream> 
+using namespace std; 
+int main() 
+{ 
+    const int size; 
+    cout << size; 
+    return 0; 
+} 
+
+Output:
+error: uninitialized const 'size'
+
+Explanation: At first glance its obvious to think that output will be some garbage value, but it is not the case.
+Unlike C in C++ any variable declared as constant needs to be initialized at the time of declaration.
+Hence the given code will not compile and throw the error. It should be noted that the same code will get compiled
+in ANSI C and will produce output as 0. 
+
+====================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

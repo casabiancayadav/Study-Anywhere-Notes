@@ -1,4 +1,11 @@
 
+# START
+
+    >>>>> 5 Right Arrows means Heading
+    >>>>  4 Right Arrows means Sub-Heading and So on.   
+
+
+
 
 						+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 						-			                	+
@@ -21,7 +28,7 @@
             |          DEAMON.
             |----->>>> Memory Layout of a process[ Stack, Heap, Data, Text(Code) ]
 
-    2-> Process control Block
+    2-> Process control Block(PCB)
     3-> Process Operations
     4-> Process sheduling
             |
@@ -54,8 +61,26 @@
 
 
     5-> Process Synchronization
+                |
+                |
+                |----------->>>> 1. Critical Section/Solution
+                |
+                |----------->>>> 2. Introducation of Semaphore /\ Properites /\ Types of Semaphore
+                |
+                |----------->>>> 3. Limitation of semaphore /\ Classic problems of Semaphore
+                |
+                |----------->>>> 4. Deadlock /\ How to avoid it
+
+
     6-> Interprocess communication
-    7-> Deadlock
+    7-> Interview Questions:
+    
+        1) Difference between Thread and fork pocess creation.   
+
+        2) what is named and unnamed semaphore ?
+
+
+===================================================================================================================================
 
 
 1)
@@ -63,7 +88,8 @@
 Differences between the Kernel and the Operating System  |
 ----------------------------------------------------------
 
-1-> 	The Operating System is a system software containing various Programs in it while the Kernel is the central Program of the Operating System.
+1-> 	The Operating System is a system software containing various Programs in it
+        while the Kernel is the central Program of the Operating System.
 
 2-> 	The Kernel performs the lowest level functions of the Operating System like
 
@@ -88,9 +114,13 @@ Differences between the Kernel and the Operating System  |
 
 	and these applications are again, a part of the Operating System.
 
-	4-> Operating System is a System Software which is the first one to get loaded into the main memory as soon as the system is turned on.
+4->  Operating System is a System Software which is the first one to get loaded into 
+     the main memory as soon as the system is turned on.
 
-	The Kernel is that Program of the Operating System which gets loaded into the memory before any other Program in the Operating System.
+	 The Kernel is that Program of the Operating System which gets loaded into the memory
+     ------------------------------------------------------------------------------------
+     before any other Program in the Operating System.
+     --------------------------------------------------
 
 ==================================================================================================================================================
 2)
@@ -252,8 +282,11 @@ Differences between the Kernel and the Operating System  |
     +-+-+-+-+-+-+-+-+
 
     A process that needs to run for a long period of time and does not require a controlling terminal,
+    -------------------------------------------------------------------------------------------------
     these type of processes are programmed in a way that they becomes a daemon processes.
-    For example, monitoring software like key-logger etc are usually programmed as daemon processes. A daemon process has no controlling terminal. 
+    For example, monitoring software like key-logger etc are usually programmed as daemon processes.
+    A daemon process has no controlling terminal. 
+    ---------------------------------------------
 
     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+
     Memory layout of a process  |
@@ -303,8 +336,10 @@ Differences between the Kernel and the Operating System  |
                                                                                 ----------
             >>> Processes in the Ready state are placed in the Ready Queue.
                                                               -------------  
-            >>> Processes waiting for a device to become available are placed in Device Queues. There are unique device queues available for each I/O device.
-                                                                                 --------------
+            >>> Processes waiting for a device to become available are placed in Device Queues.
+                                                                                ---------------
+                There are unique device queues available for each I/O device.
+                                                                               
 
 
         A new process is initially put in the Ready queue. It waits in the ready queue until it is selected for execution(or dispatched).
@@ -486,13 +521,181 @@ Differences between the Kernel and the Operating System  |
 
 
     ==================================================================================================================================================
-Process Synchronization
-Process Synchronization means sharing system resources by processes in a such a way that, Concurrent access to shared data is handled thereby minimizing the chance of inconsistent data. Maintaining data consistency demands mechanisms to ensure synchronized execution of cooperating processes.
-Process Synchronization was introduced to handle problems that arose while multiple process executions. Some of the problems are discussed below.
+
+>>>> Process Synchronization  :-
+     ------------------------
+    Process Synchronization means sharing system resources by processes in a such a way that,
+    Concurrent access to shared data is handled thereby minimizing the chance of inconsistent data.
+    Maintaining data consistency demands mechanisms to ensure synchronized execution of cooperating processes.
+    Process Synchronization was introduced to handle problems that arose while multiple process executions.
+    Some of the problems are discussed below.
 
 
-Critical Section Problem
-A Critical Section is a code segment that accesses shared variables and has to be executed as an atomic action. It means that in a group of cooperating processes, at a given point of time, only one process must be executing its critical section. If any other process also wants to execute its critical section, it must wait until the first one finishes.
+>>>> Critical Section Problem :-
+    ----------------------------
+
+    A Critical Section is a code segment that accesses shared variables and has to be executed as an atomic action.
+    It means that in a group of cooperating processes, at a given point of time, only one process must be executing
+    its critical section. If any other process also wants to execute its critical section, it must wait until the first one finishes.
+
+>>>> Solution to Critical Section Problem :
+     --------------------------------------
+    A solution to the critical section problem must satisfy the following three conditions:
+
+1. Mutual Exclusion :
+  ----------------------
+    Out of a group of cooperating processes, only one process can be in its critical section at a given point of time.
+
+2. Progress :
+   --------------
+    If no process is in its critical section, and if one or more threads want to execute their critical section then
+    any one of these threads must be allowed to get into its critical section.
+
+3. Bounded Waiting:
+   ----------------- 
+    After a process makes a request for getting into its critical section, there is a limit for how many other processes
+    can get into their critical section, before this process's request is granted. So after the limit is reached,
+    system must grant the process permission to get into its critical section.
+
+==================================================================================================================================================
+
+>>>> Introduction to Semaphores :
+     ---------------------------
+
+    In 1965, Dijkstra proposed a new and very significant technique for managing concurrent processes by using the value
+    of a simple integer variable to synchronize the progress of interacting processes. This integer variable is called semaphore.
+    So it is basically a synchronizing tool and is accessed only through two low standard atomic operations,
+    wait and signal designated by P(S) and V(S) respectively.
+
+    In very simple words, semaphore is a variable which can hold only a non-negative Integer value, shared between all the threads,
+    with operations wait and signal, which work as follow:
+
+P(S): if S ≥ 1 then S := S - 1
+      else <block and enqueue the process>;
+
+V(S): if <some process is blocked on the queue>
+        then <unblock a process>
+      else S := S + 1;
+
+>>>>The classical definitions of wait and signal are:
+    -------------------------------------------------
+
+Wait: Decrements the value of its argument S, as soon as it would become non-negative(greater than or equal to 1).
+------
+
+Signal: Increments the value of its argument S, as there is no more process blocked on the queue.
+--------
+Properties of Semaphores :
+--------------------------
+
+    1)  It's simple and always have a non-negative Integer value.
+    2)  Works with many processes.
+    3)  Can have many different critical sections with different semaphores.
+    4)  Each critical section has unique access semaphores.
+    5)  Can permit multiple processes into the critical section at once, if desirable.
+
+
+>>>>> Types of Semaphores :
+      --------------------
+        Semaphores are mainly of two types:
+
+    1)  Binary Semaphore: 
+        ------------------
+        It is a special form of semaphore used for implementing mutual exclusion, hence it is often called a Mutex.
+                                                   -----------------------------                    ----------------     
+        A binary semaphore is initialized to 1 and only takes the values 0 and 1 during execution of a program.
+        --------------------------------------------------------------------------------------------------------
+
+    2)  Counting Semaphores: 
+        ---------------------
+        These are used to implement bounded concurrency.
+                          ------------------------------
+
+    Example of Use :
+    ---------------
+
+    Here is a simple step wise implementation involving declaration and usage of semaphore.
+    Shared var mutex: semaphore = 1;
+    Process i
+        begin
+        .
+        .
+        P(mutex);
+        execute CS;
+        V(mutex);
+        .
+        .
+        End;
+
+    Limitations of Semaphores :
+    --------------------------
+
+    1)  Priority Inversion is a big limitation of semaphores.
+    2)  Their use is not enforced, but is by convention only.
+    3)  With improper use, a process may block indefinitely. Such a situation is called Deadlock.
+        We will be studying deadlocks in details in coming lessons.
+
+Classical Problems of Synchronization :
+--------------------------------------
+
+    In this tutorial we will discuss about various classic problem of synchronization.
+    Semaphore can be used in other synchronization problems besides Mutual Exclusion.
+    Below are some of the classical problem depicting flaws of process synchronaization in systems where cooperating processes are present.
+    We will discuss the following three problems:
+
+    1-> Bounded Buffer (Producer-Consumer) Problem
+    2-> The Readers Writers Problem
+    3-> Dining Philosophers Problem
+
+
+>>>>>   What is a Deadlock?
+        --------------------
+
+    Deadlocks are a set of blocked processes each holding a resource and waiting to acquire a resource held by another process.
+
+    visit picture of  this link:
+    https://www.studytonight.com/operating-system/deadlocks
+
+>>>>   How to avoid Deadlocks:
+       -----------------------
+
+    Deadlocks can be avoided by avoiding at least one of the four conditions, because all this four
+    conditions are required simultaneously to cause deadlock.
+
+ 1) Mutual Exclusion:
+    -----------------
+
+    Resources shared such as read-only files do not lead to deadlocks but resources, such as printers and tape drives,
+    requires exclusive access by a single process.
+
+ 2) Hold and Wait:
+    ---------------
+
+    In this condition processes must be prevented from holding one or more resources while simultaneously waiting for one or more others.
+
+ 3) No Preemption:
+    --------------
+
+    Preemption of process resource allocations can avoid the condition of deadlocks, where ever possible.
+
+ 4) Circular Wait:
+    --------------
+
+    Circular wait can be avoided if we number all resources, and require that processes request resources
+    only in strictly increasing(or decreasing) order.
+
+    What is a Livelock? 
+    -------------------
+
+    There is a variant of deadlock called livelock. This is a situation in which two or more processes continuously
+    change their state in response to changes in the other process(es) without doing any useful work.
+    This is similar to deadlock in that no progress is made but differs in that neither process is blocked or waiting for anything. 
+    A human example of livelock would be two people who meet face-to-face in a corridor and each moves 
+    aside to let the other pass, but they end up swaying from side to side without making any progress
+    because they always move the same way at the same time.
+
+
+
 
 
 
@@ -513,12 +716,9 @@ A Critical Section is a code segment that accesses shared variables and has to b
     ==================================================================================================================================================
 
 
-    ==================================================================================================================================================
 
 
-
-
-
+# END
 
 
 
