@@ -44,7 +44,7 @@
 1) Stucture/Union can't have a static member in C.
 2) Structure can't have array of bit field.
 3) IT is implementation dependent to assign an out of range value to a bit field member.
-   but gcc out is as following.
+   but gcc output is as following.....
     i.e
         struct tag
         {
@@ -62,7 +62,7 @@
             s.l =10;
 
 
-                 OUTPUT:
+         + **OUTPUT:**
                     i = -1
                     j = -2
                     k = -3
