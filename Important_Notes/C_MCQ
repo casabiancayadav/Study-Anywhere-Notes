@@ -5,37 +5,23 @@
     Sizeof(NULL)  ----> 8 Bytes  // size of Pointer
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ================================================================================================================
 
-
-       >>>>>>>>>  OPERATORS  <<<<<<<<<<
+    >>>>>>>>>  OPERATORS  <<<<<<<<<<
 
 
 1) Bitwise operator is not allowed on Flot/double values.
 
 2) void main()
-{
-    int k =8;
-    int m = 7;
+    {
+        int k =8;
+        int m = 7;
 
-    k<m ? k++:m=k;          // Lvalue Error, Assignment is not possible in ternary operator
+        k<m ? k++:m=k;          // Lvalue Error, Assignment is not possible in ternary operator
 
-    PF("%d ",k);
+        PF("%d ",k);
 
-}
+    }
 
 =================================================================================================================
 
@@ -219,12 +205,12 @@
 2) All enum constant must be unique in their sccope. 
     i.e
         enum{
-        a,b,c
-        }HI;
+                a,b,c
+            }HI;
 
         enum{
-        c,d,e
-        }HELLO;
+                c,d,e
+            }HELLO;
 
         'C' can't be in same file with same scope.
 
@@ -234,17 +220,16 @@
 
     i.e
         Enum San{
-        a,b,c=5
-        
-        };
+                    a,b,c=5
+                };
 
         enum San s;
 
         main(){
-        s++;                // No Error
-        c++;                // Error can't modify
-        printf("%d",c);
-        }
+                s++;                // No Error
+                c++;                // Error can't modify
+                printf("%d",c);
+              }
 
 4) There is no physical memory for Enum constants only logical memory. 
 
