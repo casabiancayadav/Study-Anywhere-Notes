@@ -301,7 +301,9 @@
     
     PF("%d ",*++ptr); // o/p : 2        // first increment in Address then dereference. |0|2|2|3|4| ->> addr(11002)
 
-    PF("%d ",++*ptr);// o/p : 3         // First derefrence and then increment Address . 
+    PF("%d ",++*ptr);// o/p : 3         // First derefrence and then increment value.   |0|2|3|3|4| ->> addr(11002)
+    
+    PF("%d ",*ptr);
 
 }
 
