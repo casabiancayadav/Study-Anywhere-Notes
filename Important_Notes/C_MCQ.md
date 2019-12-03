@@ -10,7 +10,7 @@
     >>>>>>>>>  OPERATORS  <<<<<<<<<<
 
 
-1) Bitwise operator is not allowed on Flot/double values.
+1) Bitwise operator is not allowed on Float/double values.
 
 2) void main()
     {
@@ -38,7 +38,7 @@
             int j:2;
             int k:3;
             int l:4;
-                
+
         };
 
         struct st s;
@@ -70,13 +70,16 @@
 
 
 4) we can't have pointer to bit field members they  may not start at a byte boundry.
+
 5) A special unnammmed bit field of size 0 is used to force alignment on next boundry.
+
 6) Float and double is not allowed for bit field.
-7) 
+
+7)
     # headerfiles
 
     struct tag t;   // it is posssible.
-    
+
     stuct tag
     {
         char ch;
@@ -87,9 +90,9 @@
     {
         t.ch = 'A';
         t.Arr[0] = 12;
-    
+
         PF("%c %d\n",t.ch,t.arr[0]);
-        
+
     }
 
     OUTPUT :    NO Error
@@ -103,7 +106,7 @@
         struct tag p2 ={1};
 
         struct tag p3 = p1; // NO ERROR,all value of p1 will  accomodate into p3.
-        
+
         if(p1 == p2) PF("Equal");   // Compiler Error
         else PF("NOT Equal");
 
@@ -112,27 +115,27 @@
 
 10) Designated initilization of structure allows random initilize of a structure members.
 
-11)     >>>>>>>   Bit FIELD   <<<<<<<<<< 
-    
+11)     >>>>>>>   Bit FIELD   <<<<<<<<<<
+
         case 1:                                 
                 struct tag{                        
-                                                
+
                     unsigned int a; // First 4 bytes            
                     unsigned int b; // second 4 bytes            
                     unsigned int c; // thrid 4 bytes            
-                
+
                 };
-                    
+
             >>>>>>>   OUTPUT: 12 bytes
-        
+
 
         case 2:                                 
                 struct tag{                        
-                                                
+
                     unsigned int a:1;  // fisrt 4 bytes         
                     unsigned int b:31; // will  get accomodated in the 1st 4 Bytes         
                     unsigned int c:1;  // Second 4 Bytes are allocate         
-                
+
                 };
 
             >>>>>>> OUTPUT: 8 Bytes
@@ -140,11 +143,11 @@
 
         case 3:                                 
                 struct tag{                        
-                                                
+
                     unsigned int a:1;  // fisrt 4 bytes         
                     unsigned int b:32; // will not get accomodated in the 1st 4 Bytes so 2nd Byte will allocate         
                     unsigned int c:1;  // will not accomodate in Second 4 Bytes So 3rd Byte will allocate         
-                
+
                 };
 
             >>>>>>> OUTPUT: 12 Bytes
@@ -152,11 +155,11 @@
 
         case 4:                                 
                 struct tag{                        
-                                                
+
                     unsigned int a:1;  // fisrt 4 bytes         
                     unsigned int b:1;  // will  get accomodated in the 1st 4 Bytes         
                     unsigned int c:1;  // will get accomodated int 1st 4 Bytes         
-                
+
                 };
 
             >>>>>>> OUTPUT: 4 Bytes
@@ -164,11 +167,11 @@
 
         case 5:                                 
                 struct tag{                        
-                                                
+
                     unsigned int a:32;   // fisrt 4 bytes         
                     unsigned int b:1;   // Second 4 Bytes are allocate.         
                     unsigned int c:1;  // will get accomodate in the second 4 bytes.       
-                
+
                 };
 
             >>>>>>> OUTPUT: 8 Bytes
@@ -176,11 +179,11 @@
 
         case 6: // Special case                                 
                 struct tag{                        
-                                                
+
                     unsigned int a:5;  // fisrt 4 bytes         
                     unsigned int :0;   // will  get accomodated in the 1st Bytes         
                     unsigned int c:8;  // Second 4 Bytes are allocate         
-                
+
                 };
 
             >>>>>>> OUTPUT: 8 Bytes
@@ -189,7 +192,7 @@
 
       >>>>>>>>  UNION  <<<<<<<<<<
 
-1) 
+1)
 
 
 
@@ -202,7 +205,7 @@
       >>>>>>>>>  ENUMS  <<<<<<<<<<
 
 1) Only integer constant are allowed into Enums
-2) All enum constant must be unique in their sccope. 
+2) All enum constant must be unique in their sccope.
     i.e
         enum{
                 a,b,c
@@ -231,7 +234,7 @@
                 printf("%d",c);
               }
 
-4) There is no physical memory for Enum constants only logical memory. 
+4) There is no physical memory for Enum constants only logical memory.
 
 
 ==========================================================================================================================
@@ -240,7 +243,7 @@
 
 1) typedef follow scope rule.
 2) typedef defined substitutes can not re-defined again.
-    i.e 
+    i.e
         typedef char a;
         typedef int a;  // Error
 
@@ -255,7 +258,7 @@
             int data;
             NODE *ptr; // ERROR
 
-        }NODE; 
+        }NODE;
 
 5) Both cases are Correct and valid in gcc compiler.
 
@@ -277,17 +280,17 @@
         ptr[i] = i;                      // |0|1|2|3|4|
                                          // -----------
     }
-    
+
     PF("%d ",*ptr++); // o/p : 0         // ( * ( ptr++ ) ), post increment in address.  |0|1|2|3|4|  ->> addr(11001)
 
     PF("%d ",(*ptr)++); // o/p : 1       // first derefrence and then increment in value. |0|2|2|3|4| ->> addr(11001)
-    
+
     PF("%d ",*ptr); // o/p : 2          // |0|2|2|3|4| ->> addr(11001)
-    
+
     PF("%d ",*++ptr); // o/p : 2        // first increment in Address then dereference. |0|2|2|3|4| ->> addr(11002)
 
     PF("%d ",++*ptr);// o/p : 3         // First derefrence and then increment value.   |0|2|3|3|4| ->> addr(11002)
-    
+
     PF("%d ",*ptr);
 
 }
@@ -295,7 +298,7 @@
 OUTPUT :
         0 1 2 2 3
 
-2) void pointer can't be derefrence. we must typecast before using it. 
+2) void pointer can't be derefrence. we must typecast before using it.
 
 
 
@@ -312,7 +315,7 @@ OUTPUT :
             void fun();     // No Error
             ----
             -----
-        
+
         }
 
         void fun()
@@ -328,9 +331,8 @@ OUTPUT :
     i.e
         int fun(void)
         {
-        
+
         return ANY_VALUE;
         }
 
     sizeof(fun); // output will be size of funcation return type.
-
