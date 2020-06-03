@@ -73,9 +73,11 @@ There is no need to use integer data type all time for small values.
                
 There are other data types, which are used to store small integer values,and use according to the variable range.
 
-If a variable’s value is positive in all cases, you may use ‘unsigned’ with the data type, it ensure that only positive values will be stored.
+If a variable’s value is positive in all cases, you may use ‘unsigned’ with the data type, it ensure that only positive values
+will be stored.
 
-Note: for an unsigned type of variable, make sure its value must be zero or positive, if there is any negative value, value will be truncated. 
+Note: for an unsigned type of variable, make sure its value must be zero or positive, if there is any negative value, value
+will be truncated. 
 
 ==================================================================================================================================================
 6)
@@ -216,11 +218,15 @@ Pre-increment is faster than post-increment because post increment keeps a copy 
 adds 1 in the existing value while pre-increment is simply adds 1 without keeping the existing value.
 
 ==================================================================================================================================================
+15)
+
+Use structure for large programs and encapsulate data and funcations there. you will see wide use of funcation Pointer here.
+    -----------------									     -----------------------	
 
 
 
 
-
+==================================================================================================================================================
 
 
 
