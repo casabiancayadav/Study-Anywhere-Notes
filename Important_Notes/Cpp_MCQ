@@ -204,8 +204,12 @@ int main()
 } 
 
 
-There is a compilation error in line “A a[2]”. There is no default constructor in class A. When we write our own parameterzied constructor or copy constructor, compiler doesn’t create the default constructor (See this Gfact). We can fix the error, either by creating a default constructor in class A, or by using the following syntax to initialize array member using parameterzied constructor. 
- // Initialize a[0] with value 10 and a[1] with 20 
+There is a compilation error in line “A a[2]”. There is no default constructor in class A. When we write our own 
+parameterzied constructor or copy constructor, compiler doesn’t create the default constructor (See this Gfact).
+We can fix the error, either by creating a default constructor in class A, or by using the following syntax to
+initialize array member using parameterzied constructor. 
+
+// Initialize a[0] with value 10 and a[1] with 20 
  A a[2] = { A(10),  A(20) } 
 
  OR simply
@@ -248,7 +252,10 @@ int main()
 
 
 Output: Compiler Error: ‘class base’ has no member named ‘getX’
-In the above program, there is pointer ‘bp’ of type ‘base’ which points to an object of type derived. The call of show() through ‘bp’ is fine because ‘show()’ is present in base class. In fact, it calls the derived class ‘show()’ because ‘show()’ is virtual in base class. But the call to ‘getX()’ is invalid, because getX() is not present in base class. When a base class pointer points to a derived class object, it can access only those methods of derived class which are present in base class and are virtual.
+In the above program, there is pointer ‘bp’ of type ‘base’ which points to an object of type derived. The call of show() 
+through ‘bp’ is fine because ‘show()’ is present in base class. In fact, it calls the derived class ‘show()’ because ‘show()’
+is virtual in base class. But the call to ‘getX()’ is invalid, because getX() is not present in base class. When a base class
+pointer points to a derived class object, it can access only those methods of derived class which are present in base class and are virtual.
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -301,7 +308,8 @@ int main()
 
 
 Output: Compiler Error.
-In the above program, fun() of base class is not accessible in the derived class. If a derived class creates a member method with name same as one of the methods in base class, then all the base class methods with this name become hidden in derived class 
+In the above program, fun() of base class is not accessible in the derived class. If a derived class creates a member 
+method with name same as one of the methods in base class, then all the base class methods with this name become hidden in derived class 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -329,7 +337,9 @@ int main()
 } 
 
 Output: Compiler Error
-In the above program, x is protected, so it is accessible in derived class. Derived class constructor tries to use initializer list to directly initialize x, which is not allowed even if x is accessible. The members of base class can only be initialized through a constructor call of base class. Following is the corrected program. 
+In the above program, x is protected, so it is accessible in derived class. Derived class constructor tries to use 
+initializer list to directly initialize x, which is not allowed even if x is accessible. The members of base class 
+can only be initialized through a constructor call of base class. Following is the corrected program. 
 
 #include<iostream> 
 using namespace std; 
@@ -372,7 +382,11 @@ int main()
 Output: 
 Compiler error:
 11 8 [Error] expected ';' before 'm' 
-The above program looks syntactically correct but it fails in compilation. The reason class name. Class name is main so it is necessary to tell the compiler that main is the name of class. Generally struct or class keyword is not required to write to create an object of the class or struct. But when the name of class is main it becomes necessary to write struct or class when creating object of class or struct. Remember main is not a reserved word.
+The above program looks syntactically correct but it fails in compilation. The reason class name. Class name is main so
+it is necessary to tell the compiler that main is the name of class. Generally struct or class keyword is not required to
+write to create an object of the class or struct. But when the name of class is main it becomes necessary to write struct 
+or class when creating object of class or struct. Remember main is not a reserved word.
+
 Following is a correct version of the above program:
 
 #include <iostream> 
@@ -403,8 +417,11 @@ int main()
 {              
 }
 
-The above program compiles and runs fine because object is global. Global object‘s constructor executes before main() function and it’s destructor executes when main() terminates.
-Conclusion: When the class/struct name is main and whenever the local object is created it is mandatory to write class or struct when the object of class / and struct is created. Because C++ program execution begins from main () function. But this rule is not applied to global objects. Again, main isn’t a keyword but treat it as if it were.
+The above program compiles and runs fine because object is global. Global object‘s constructor executes before main() function
+and it’s destructor executes when main() terminates.
+Conclusion: When the class/struct name is main and whenever the local object is created it is mandatory to write class or 
+struct when the object of class / and struct is created. Because C++ program execution begins from main () function.
+But this rule is not applied to global objects. Again, main isn’t a keyword but treat it as if it were.
 
 ===========================================================================================
 
