@@ -185,6 +185,56 @@
 
             >>>>>>> OUTPUT: 8 Bytes
 
+12 )  Find structure size :
+      Trick : structre Padding
+                
+            (*) structure size always 4 bytes memory boundry align.
+                so sizeof( struct _node )%4 == 0
+            
+            (*)  Structre padding happen according to largest structre member.
+
+
+    (#) struct _node
+        {
+            int a;
+            int b;
+            char c[10];
+        };
+        (*) Note : we calculate size of this structre is 18 but 18 is not devisible by 4. So padding
+                    will happen according to largest member of Structre which is int and sizeof int is 4 bytes.
+
+        >>>> Sizeof(struct _node) ==> 20 Bytes  
+
+    (#) struct _node
+    {
+        char a; 
+        int b;
+        int d;
+        char c; 
+    };
+
+     >>>> Sizeof(struct _node) ==> 16 Bytes  
+
+    (#) struct _node
+    {
+        char a;
+        int b;
+        double d;
+        char c; 
+    }node;
+    
+        >>>> Sizeof(struct _node) ==> 24 Bytes  
+
+        (*) Note : Structre padding happen according to largest structre member.
+                    In this case padding happening 8 bytes memory allign.
+                    
+                struct _node
+                    {
+                        char a;
+                        double d;
+                        char c; 
+                    }node;
+
 =====================================================================================================================
 
       >>>>>>>>  UNION  <<<<<<<<<<
