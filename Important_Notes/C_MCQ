@@ -207,12 +207,13 @@
 
     (#) struct _node
     {
-        char a; 
-        int b;
-        int d;
-        char c; 
+        char a;  // 0-3
+        int b; // 4-7
+        int d; // 8-11
+        char c; //12-15
     };
 
+    (*) int always take address which will start from
      >>>> Sizeof(struct _node) ==> 16 Bytes  
 
     (#) struct _node
@@ -235,6 +236,8 @@
                         char c; 
                     }node;
                         >>>> Sizeof(struct _node) ==> 24 Bytes  
+
+                        
 =====================================================================================================================
 
       >>>>>>>>  UNION  <<<<<<<<<<
@@ -346,7 +349,7 @@ OUTPUT :
         0 1 2 2 3
 
 2) void pointer can't be derefrence. we must typecast before using it. 
-
+3)  
 
 
 
