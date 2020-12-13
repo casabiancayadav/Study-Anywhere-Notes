@@ -1,0 +1,23 @@
+
+
+
+1 ) Macro to set nth-bit
+    #define SET_BIT(x, pos) (x |= (1U << pos))
+
+2) Macro to clear nth-bit
+    #define CLEAR_BIT(x, pos) (x &= (~(1U<< pos)))
+ 
+3) Macro to toggle nth-bit
+    #define TOGGLE_BIT(x, pos) x ^= (1U<< pos)
+
+4) Macro to check nth-bit
+    #define CHECK_BIT(x, pos) (x & (1UL << pos) )
+
+5) Macro to swap nibbles
+    #define SWAP_NIBBLES(x) ((x & 0x0F)<<4 | (x & 0xF0)>>4)
+
+#define SBIT(var, bitpos )  (var | (1 << (bitpos ) ) )
+#define RBIT(var, bitpos )  (var & ~(1 << (bitpos ) ) )
+
+#define SBITFrom(x)  ( ( x )==32 ? 0xFFFFFFFFUL : ( (1 << ( x ) ) - 1 ) )
+#define SBITinRange((H+1), L)  ( ( SBITFrom(H) ) & ~( SBITFrom(L) ) )
