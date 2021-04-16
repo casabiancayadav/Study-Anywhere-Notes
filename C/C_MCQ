@@ -110,9 +110,10 @@
 9) Structure can't be initilize with declaration. Because structure datatype declare no memory
    allocate. Memory allocate when variable are created.
 
-10) Designated initilization of structure allows random initilize of a structure members.
+10) Designated initilization of structure allows random initilize of a structure members. but not supported by all plateform.
 
 11)     >>>>>>>   Bit FIELD   <<<<<<<<<< 
+		
     
         case 1:                                 
                 struct tag{                        
@@ -185,7 +186,10 @@
 
             >>>>>>> OUTPUT: 8 Bytes
 
-12 )  Find structure size :
+12 ) 	>>>>>>>	  Structure Size <<<<<<<
+
+		Find structure size :
+
       Trick : structre Padding
                 
             (*) structure size always 4 bytes memory boundry align.
@@ -218,10 +222,10 @@
 
     (#) struct _node
     {
-        char a;
-        int b;
-        double d;
-        char c; 
+        char a;// 0-3
+        int b;// 4-7
+        double d;//8-15
+        char c; // 16-23, beacause double is 8 byte memory allign
     }node;
     
         >>>> Sizeof(struct _node) ==> 24 Bytes  
@@ -231,7 +235,7 @@
                     
                 struct _node
                     {
-                        char a;
+                        char a;// 0-7, beacause double will take memory from where the address is divisiable by 8.
                         double d;
                         char c; 
                     }node;
