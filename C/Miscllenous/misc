@@ -1,0 +1,7 @@
+>>>>>>>>    MISC    <<<<<<<<
+
+	1)  Sizeof('\0')  ----> 4 Bytes // size of int like normal character
+	
+		Sizeof(NULL)  ----> 8 Bytes  // size of Pointer
+	
+	2)  Sizeof(--i)   ----> Any operation cann't perform in sizeof
