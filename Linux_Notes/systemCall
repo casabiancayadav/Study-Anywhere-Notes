@@ -16,6 +16,7 @@
 			1# pid_t fork(void) :
 				> When the child process is successfully created, the PID of the child process 
 				  is returned in the parent process and 0 will be returned to the child process itself.
+				> The child process and parent process gets executed simultaneously.
 				> If there is any error then -1 is returned to the parent process and the child process is not created.
 				> Please note that Unix will make an exact copy of the parent's address space and give it to the child.
                   Therefore, the parent and child processes have separate address spaces.
@@ -39,6 +40,31 @@
    				  Record locks are associated with a file block or an entire file.
 				> rocess resource utilisation and CPU time consumed is set to zero for the child.
 				> The child also doesn’t inherit timers from the parent.
+			
+			
+			2# vfork() :
+				> vfork() system call, child and parent process share same address space.
+				> Once child process is executed then parent process starts its execution.
+				> While vfork() system call does not use copy-on-write.
+				> Child process suspends parent process execution in vfork() system call.
+				> If child process alters page in address space, it is visible to parent process.
+				> There is no wastage of address space.
+				
+			3# exec family :
+				> The exec() family of functions replaces the current process image with a new process image.
+				  It loads the program into the current process space and runs it from the entry point.
+				  PID of the process is not changed but the data, code, stack, heap, etc. of the process
+				  are changed and are replaced with those of newly loaded process.
+				  The new process is executed from the entry point.
+				> There is no return from a successful exec, because the calling process image is overlaid by the new process image.
+				> The new program is loaded into the same process space. The current process is just turned into
+				  a new process and hence the process id PID is not changed, this is because we are not creating 
+				  a new process we are just replacing a process with another process in exec.
+				  If the currently running process contains more than one thread then all the 
+				  threads will be terminated and the new process image will be loaded and then executed.
+				  There are no destructor functions that terminate threads of current process.
+				> The currently running process is ended.
+				
 			
 			
 		>>>>>>>>>>> File Management
