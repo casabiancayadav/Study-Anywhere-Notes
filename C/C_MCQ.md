@@ -187,10 +187,6 @@ OUTPUT :    NO Error
             >>>>>>> OUTPUT: 8 Bytes
     ```
 
-     
-     
-     >>>>>>>>  UNION  <<<<<<<<<<
-
 ## UNION :
 
 
@@ -255,11 +251,11 @@ OUTPUT :    NO Error
 
 4) we cant use yet to be typedef-ed data type inside while applying typedef itself.
    i.e
-        typedef struct node{
-
-            int data;
-            NODE *ptr; // ERROR
        
+
+          typedef struct node{
+       	  int data;
+             NODE *ptr; // ERROR
         }NODE;
 
 5) Both cases are Correct and valid in gcc compiler.
