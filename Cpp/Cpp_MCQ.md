@@ -1,96 +1,100 @@
-    >>>>    SELF LEARNING   <<<<<
-    
-   Q: When do we use Initializer List in C++? 
+# SELF LEARNING
+
+ Q: When do we use Initializer List in C++? 
       Hint: [Search on GEEKSFORGEEKS]
-    
-    
-    
-    
-    =========================================================================================================    
-    
-    >>>>>>>>    CONSTRUCTOR     <<<<<<<<<
 
-    1)  In C++, if we do not write our own, then compiler automatically creates a default constructor,
-                                                                               -----------------------             
-        a copy constructor and a assignment operator for every class.
-        ------------------      ---------------------
 
-    2)  Unlike new, malloc() doesn't call constructor.If we replace malloc() with new, the constructor is called, 
-    
-        #include<iostream>
-        #include<stdlib.h>
-        using namespace std;
-         
-        class Test
-        {
-        public:
-           Test()
-           { cout << "Constructor called"; }
-        };
-         
-        int main()
-        {
-            Test *t = (Test *) malloc(sizeof(Test)); // it will not call constructor.
-            Test *s = new Test; // it will call constructor.
-            return 0;
-        }
 
-    3)  #include<iostream>
-        #include<string.h>
-        using namespace std;
-         
-        class String
-        {
-            char *str;
-        public:
-             String(const char *s);
-             void change(int index, char c) { str[index] = c; }
-             char *get() { return str; }
-        };
-         
-        String::String(const char *s)
-        {
-            int l = strlen(s);
-            str = new char[l+1];
-            strcpy(str, s);
-        }
-         
-        int main()
-        {
-           String s1("geeksQuiz");
-           String s2 = s1;
-           s1.change(0, 'G');
-           cout << s1.get() << " ";
-           cout << s2.get();
-        }
+##  CONSTRUCTOR
 
-    output:
-        GeeksQuiz GeeksQuiz
 
-     Since there is no copy constructor, the compiler creates a copy constructor.
-     The compiler created copy constructor does shallow copy in line " String s2 = s1;"
-                                                ----------------------------------------
-     So str pointers of both s1 and s2 point to the same location. There must be a user
-     -------------------------------------------------------------
-     defined copy constructor in classes with pointers ot dynamic memory allocation.
+
+```markdown
+
+>>>>>>>>    CONSTRUCTOR     <<<<<<<<<
+
+1)  In C++, if we do not write our own, then compiler automatically creates a default constructor,
+                                                                           -----------------------             
+    a copy constructor and a assignment operator for every class.
+    ------------------      ---------------------
+
+2)  Unlike new, malloc() doesn't call constructor.If we replace malloc() with new, the constructor is called, 
+
+    #include<iostream>
+    #include<stdlib.h>
+    using namespace std;
+     
+    class Test
+    {
+    public:
+       Test()
+       { cout << "Constructor called"; }
+    };
+     
+    int main()
+    {
+        Test *t = (Test *) malloc(sizeof(Test)); // it will not call constructor.
+        Test *s = new Test; // it will call constructor.
+        return 0;
+    }
+
+3)  #include<iostream>
+    #include<string.h>
+    using namespace std;
+     
+    class String
+    {
+        char *str;
+    public:
+         String(const char *s);
+         void change(int index, char c) { str[index] = c; }
+         char *get() { return str; }
+    };
+     
+    String::String(const char *s)
+    {
+        int l = strlen(s);
+        str = new char[l+1];
+        strcpy(str, s);
+    }
+     
+    int main()
+    {
+       String s1("geeksQuiz");
+       String s2 = s1;
+       s1.change(0, 'G');
+       cout << s1.get() << " ";
+       cout << s2.get();
+    }
+
+output:
+    GeeksQuiz GeeksQuiz
+
+ Since there is no copy constructor, the compiler creates a copy constructor.
+ The compiler created copy constructor does shallow copy in line " String s2 = s1;"
+                                            ----------------------------------------
+ So str pointers of both s1 and s2 point to the same location. There must be a user
+ -------------------------------------------------------------
+ defined copy constructor in classes with pointers ot dynamic memory allocation.
+```
 
 4)  #include<iostream>
 using namespace std;
-  
+
 class Test
 {
 public:
   Test();
 };
-  
+
 Test::Test()  {
     cout << " Constructor Called. ";
 }
-  
+
 void fun() {
   static Test t1;
 }
-  
+
 int main() {
     cout << " Before fun() called. ";
     fun();
@@ -138,20 +142,21 @@ Q:1
        f1.print(); 
        return 0; 
     } 
-
+    
     Solution:
         
     Output: 7/9
 The methods Num() and Den() return references to num and den respectively. Since references are returned,
 the returned values can be uses as an lvalue, and the private members den and num are modified. The program
 compiles and runs fine, but this kind of class design is strongly discouraged (See this). Returning reference
+
 to private variable allows users of the class to change private data directly which defeats the purpose of encapsulation.
--------------------------------------------------------------------------------------------------------------------------------
+
 Q-2:
 
 #include<iostream> 
 using namespace std; 
-  
+
 /* local variable is same as a member's name */
 class Test 
 { 
@@ -161,7 +166,7 @@ public:
     void setX (int x) { Test::x = x; } 
     void print() { cout << "x = " << x << endl; } 
 }; 
-  
+
 int main() 
 { 
     Test obj; 
@@ -174,8 +179,8 @@ int main()
 Output: 
 x = 40
 Scope resolution operator can always be used to access a class member when it is made hidden by local variables.
+
 So the line “Test::x = x” is same as “this->x = x”
----------------------------------------------------------------------------------------------------------------------------
 
 >>>> Always remember that copy constructor have constant keyword in his arguments. which we generally forget.
 
@@ -219,8 +224,8 @@ initialize array member using parameterzied constructor.
      A a(10);
      a.print();
      return 0;
- }
---------------------------------------------------------------------------------------------------------------------------------------------------
+
+}
 
 
 #include<iostream> 
@@ -281,24 +286,25 @@ int main()
 
 Output: Compiler Error
     In the above program, object ‘t’ is declared as a const object. A const object can only call const functions.
-    To fix the error, we must make getValue() a const function.
------------------------------------------------------------------------------------------------------------
+
+To fix the error, we must make getValue() a const function.
+
 #include<iostream> 
 using namespace std; 
-  
+
 class Base  
 { 
 public: 
     int fun()      { cout << "Base::fun() called"; } 
     int fun(int i) { cout << "Base::fun(int i) called"; } 
 }; 
-  
+
 class Derived: public Base  
 { 
 public: 
     int fun(char x)   { cout << "Derived::fun(char ) called"; } 
 }; 
-  
+
 int main()  
 { 
     Derived d; 
@@ -349,13 +355,13 @@ class Base {
    public: 
       Base (int i){ x = i;} 
 }; 
-  
+
 class Derived : public Base { 
    public: 
       Derived (int i):Base(i) { } 
       void print() { cout << x; } 
 }; 
-  
+
 int main() 
 { 
     Derived d(10); 
@@ -436,8 +442,8 @@ int main()
 
 output:
     It is not like C. Here size of string must be less then the size of array to accomodate
-    the null chararcter('\0').
-===========================================================================================
+
+the null chararcter('\0').
 
 #include <iostream> 
 using namespace std; 
@@ -475,7 +481,6 @@ Hence the given code will not compile and throw the error. It should be noted th
 in ANSI C and will produce output as 0. 
 
 ====================================================================================================
-
 
 
 
