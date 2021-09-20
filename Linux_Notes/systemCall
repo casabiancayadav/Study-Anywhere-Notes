@@ -65,7 +65,31 @@
 				  There are no destructor functions that terminate threads of current process.
 				> The currently running process is ended.
 				
-			
+			4# wait() :
+				> A call to wait() blocks the calling process until one of its child processes exits
+				  or a signal is received. After child process terminates, parent continues its execution.
+				> If only one child process is terminated, then return a wait() returns process ID of the terminated child process. 
+				> f more than one child processes are terminated than wait() reap any arbitrarily child and return a process ID of that child process. 
+				> When wait() returns they also define exit status (which tells our, a process why terminated) via pointer, If status are not NULL.
+				> If any process has no child process then wait() returns immediately “-1”.
+				# Child status information: 
+					> Status information about the child reported by wait is more than just the exit status of the child, it also includes 
+						+ normal/abnormal termination
+						+ termination cause
+						+ exit status
+						
+					> For find information about status, we use WIF….macros
+						1. WIFEXITED(status): child exited normally 
+							• WEXITSTATUS(status): return code when child exits
+						2. WIFSIGNALED(status): child exited because a signal was not caught 
+							• WTERMSIG(status): gives the number of the terminating signal
+						3. WIFSTOPPED(status): child is stopped 
+							• WSTOPSIG(status): gives the number of the stop signal
+			5# waitpid() :
+				> We know if more than one child processes are terminated, then wait() reaps
+				  any arbitrarily child process but if we want to reap any specific child process,
+				  we use waitpid() function.
+				> 
 			
 		>>>>>>>>>>> File Management
 			1-> The Linux System calls under this are open(), read(), write(), close().
