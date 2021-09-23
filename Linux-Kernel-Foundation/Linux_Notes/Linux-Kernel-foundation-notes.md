@@ -1,24 +1,19 @@
-	
-	---------------------------------------------------------------------
-	+					Linux System Programming                        +
-	---------------------------------------------------------------------
-	---------------------------------------------------------------------
-	
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-1								*
-	*																	*
-	*********************************************************************
+	# Linux System Programming
 
-	# Cpmpilation Stages :
-		1 )	PreProcessor
-		2 )	Assembler
-		3 ) cpmpiler
-		4 ) linker
-		5 ) executative file
-		
-		
+
+
+
+
+##  Lecture-1	
+
+### Compilation Stages :
+
+	1 )	PreProcessor
+	2 )	Assembler
+	3 ) cpmpiler
+	4 ) linker
+	5 ) executative file		
+
 	#  ShortCut :
 		1.-->> # suppose  you are into some dorectory. then  you need to go into root directory. then 
 				again you want to come back.
@@ -30,17 +25,17 @@
 				# root@vivek: home/osho/workspace/ldd/download
 				
 		2.-->> # if you want to generate all compilation stages file at once. then type following command.
-
+	
 				# root@vivek: touch hello.c 
 				# root@vivek: gcc -save-temp hello.c
 				# root@vivek: 
 				# root@vivek: 
 		
 			After this all stages file will generate including exe file.
-			
-			
-		3.-->> # if you want to know the nature of any file. use below commmand.
+					
 
+		3.-->> # if you want to know the nature of any file. use below commmand.
+	
 				# root@vivek: file hello.c
 					some output
 				# root@vivek: file hello.i
@@ -49,7 +44,7 @@
 					some output
 					
 		4.-->> # if you want to know about a object file. then use below command.
-
+	
 				# root@vivek: ldd hello.o
 					some output
 				# root@vivek: ldd a.out
@@ -61,10 +56,8 @@
 					some output	
 					
 		5.--> # if you want to know the size of a file.
-				# root@vivek: size filename
-				
-				
-				
+				# root@vivek: size filename		
+
 		6.-->> # if you want to check that what address has been taken by your program into memory.
 				then first write your program in such a way that it halt.
 				then search your program process and note down process ID
@@ -79,16 +72,8 @@
 					
 						===>> All addresses shows here, are virtual addresses.
 						===>> you can heap and stack address also  here. Physical address may be differnet
-						
-					
-				
-				
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-2								*
-	*																	*
-	*********************************************************************
+
+## 	Lecture-2	
 
 
 	# A program has typically 4 sections.
@@ -110,44 +95,28 @@
 	# Interview Question :
 		
 		1.-->> What is the difference b/w decalration and Defination ?
-		  
-		  
-		  
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-3								*
-	*																	*
-	*********************************************************************
 
 
+​		  
+
+	##  Lecture-3
 
 	# nm command , Please find more about it.
-	
 
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-4								*
-	*																	*
-	*********************************************************************
+	## Lecture-4 
 
 
 	Interview Question :
 		1.-->> What happen if we pass Zero as the argument of malloc() function.
 				Hint : See man page
 
-					
-					
-					
+
+​					
+
+## 				Lecture-7
+
 
 	
-	*********************************************************************
-	*																	*	
-	*							Lecture-7								*
-	*																	*
-	*********************************************************************
-
 		1.-->> What is the Difference b/w function and system call ? 
 		
 		@=  system call is the interface b/w user space and kernal space to communicate 
@@ -166,10 +135,8 @@
 		@= system_call are architecture specific.
 		@= We can write our own system_call.
 		@= System calls are very expensive in terms of Time.
-		@= system calls are system demendent.
-		
-		
-		
+		@= system calls are system demendent.	
+
 		# Writting our own custom system_call 
 		
 			## Important Link : https://medium.com/anubhav-shrimal/adding-a-hello-world-system-call-to-linux-kernel-dad32875872
@@ -178,9 +145,8 @@
 			
 			@:- Do not try to do this in your working kernel direcctory. you will not get syscall table file.
 			
-			@:- It has 2 to 3 hour.
-			
-			
+			@:- It has 2 to 3 hour.			
+
 			1. Goto linux code directory
 				i.e 
 					# root@vivek: uname -a
@@ -197,29 +163,23 @@
 				This ensure that the listprocessInfo.c file compiled and include in
 				the kernel source code.
 			6. list your system_call into system call table.	
-			
-			
-			
+
 			NOte : 
 			
 			Different archs have different syscall numbers defined in different files
-
+	
 			The syscall numbers are different for each architecture, e.g.:
-
+	
 			x86_64: arch/x86/entry/syscalls/syscall_64.tbl: read is 0
-
+	
 			x86: arch/x86/entry/syscalls/syscall_32.tbl: read is 3
-
+	
 			arm64: include/uapi/asm-generic/unistd.h: read is 63, 
 			
 			see also: https://reverseengineering.stackexchange.com/questions/16917/arm64-syscalls-table/18834#18834
-
+	
 			arm: arch/arm/tools/syscall.tbl, read is 3
-			
-			
-			
-			
-			
+
 		## Every function has 3 main things. When we translate a function into assembly code.
 				Function name :
 					Pre-amble
@@ -228,16 +188,13 @@
 			
 		## IF you want to know more about assembly language then you can refere a Book.
 			-- Professional Assembly Language -by Richaerd Blum
-			
-			
-			
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-8								*
-	*																	*
-	*********************************************************************
 
+
+​			
+
+	## Lecture-8
+
+	
 	## Files are two type.
 		1. regular/system files
 		2. logical Files
@@ -246,13 +203,13 @@
 		Search process using process IDs.
 		
 	## EOF in linux generate by 'ctrl + D'.
-
+	
 	## writev and readv syscall is a pair of system calls that implement scatter/gather I/O.
-                                                                        --------------------
+	                                                                    --------------------
 		it means, we can put data at once into file. 
 		                             ---------------
 		it store data into intermediate buffer and push/pop data at once from/to file.
-
+	
 	## file locking is another imporatant concept. it can be done by many ways
 		
 		-->> File locking is a mechanism to restrict access to a file among multiple processes.
@@ -261,13 +218,7 @@
 		
 		-->> Linux supports two kinds of file locks: advisory locks and mandatory locks.
 
-
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-10								*
-	*																	*
-	*********************************************************************
+	##  Lecture-10
 
 
 	## fork() syscall
@@ -292,17 +243,8 @@
 		-->>> What are those things. Which are shared between parent process and child process ?
 				( # ) File discriptor shared b/w child and parent process.
 				( # ) 
-				
 
-
-
-
-	
-	*********************************************************************
-	*																	*	
-	*							Lecture-11								*
-	*																	*
-	*********************************************************************
+## Lecture-11	
 
 
 	-->> When you are dealing with multiple file descriptor then use select syscall.
@@ -310,15 +252,10 @@
 	-->> 'poll' syscall is also used for handling multiple descriptor.
 	-->> 'mmap' syscall is used to directy mapping file/data to virtual memory address.
 			it reduce over heads.
-	
+
+	##  Lecture-12	
 
 	
-	*********************************************************************
-	*																	*	
-	*							Lecture-12								*
-	*																	*
-	*********************************************************************
-
 	-->> Inter process communication(IPC).
 	-->> Msg Quees syscalls
 		>>> msgget();
@@ -346,4 +283,4 @@
 
 
 
-					
+​					
