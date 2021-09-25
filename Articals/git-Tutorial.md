@@ -13,7 +13,7 @@
 
 * In simply words suppose you have some cloud storage on online platform like Github.
 * Where you will put your code. Like we do in google Drive where we store our data.(images, Excel files, doc files etc ).
-* ![gitBasic_1](.\gitBasic_1.png)
+* ![gitBasic_1](gitImages\gitBasic_1.png)
 
 
 
@@ -40,7 +40,7 @@
 
 * If you don't have make fresh new account on Github.
 
-* Add new Repository at left Corner. ![Image_1](./Image_1.png)
+* Add new Repository at left Corner. ![Image_1](gitImages\Image_1.png)
 
   
 
@@ -56,4 +56,6 @@
 
 * [Install git for Windows](https://git-scm.com/download/win)
 * [To know more about Git read its Book](https://git-scm.com/book/en/v2)
+* [Install Git for Linux using command Line](https://linuxize.com/post/how-to-install-git-on-ubuntu-18-04/)
+* 
 
