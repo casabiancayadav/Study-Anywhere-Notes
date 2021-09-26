@@ -167,10 +167,12 @@ if (is_good(f())) {
   ```
 
   
-  
-  ## :question: Rotate An array to K times.
+
+## :question: Rotate An array to K times.
 
 :a:  space complexity is O(n) and Time Complexity is also O(n).
+
+​	**Here we need to clearly see array Indexing is done by programmer.**
 
 ```cpp
     void rotate(vector<int>& nums, int k) {
@@ -182,6 +184,8 @@ if (is_good(f())) {
         nums=res;
     }
 ```
+
+
 
 
 
