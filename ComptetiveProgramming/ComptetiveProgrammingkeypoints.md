@@ -4,7 +4,7 @@
 
 
 
-:question:  ***How to Find mid value into Binary Search ?***
+## :question:  ***How to Find mid value into Binary Search ?***
 
  :a: It is very important to find mid value. It is very easy to do it.
 
@@ -24,7 +24,7 @@ This approch is widely used in comptetive programming. It overcomes above proble
 
 
 
-:question: **Avoiding use of strlen():**
+## :question: **Avoiding use of strlen():**
 
 :a:  
 
@@ -38,19 +38,21 @@ for (i=0; s[i]; i++)
 
 
 
-:question:  **Maximum size of the array:** We must be knowing that the maximum size of array declared inside the main function is of the order of 10^6 but if you declare array globally then you can declare its size upto 10^7.
+## :question:  **Maximum size of the array:** 
 
- :question: **Calculating the number of digits directly:** 
+:a: We must be knowing that the maximum size of array declared inside the main function is of the order of **10^6** but if you declare array globally then you can declare its **size upto 10^7**.
+
+ ## :question: **Calculating the number of digits directly:** 
 
 :a: To calculate number of digits in a number, instead of looping you can efficiently use log :
 
 ```c
-Number of digits in N =floor(log10(N)) + 1;  
+Number of digits in N = floor(log10(N)) + 1;  
 ```
 
 
 
-:question:  **Checking if the number is even or odd without using the % operator:**
+## :question:  **Checking if the number is even or odd without using the % operator:**
 
 :a:  
 
@@ -64,7 +66,7 @@ cout << "EVEN";
 
 
 
-:question:  **Swapping of 2 numbers using XOR:**
+## :question:  **Swapping of 2 numbers using XOR:**
 
 :a: This method is fast and doesn’t require the use of 3rd variable.
 
@@ -77,7 +79,7 @@ a ^= b;
 
 
 
-:question:  **[Efficient trick to know if a number is a power of 2](https://www.geeksforgeeks.org/program-to-find-whether-a-no-is-power-of-two/)** 
+## :question:  **[Efficient trick to know if a number is a power of 2](https://www.geeksforgeeks.org/program-to-find-whether-a-no-is-power-of-two/)** 
 
 :a: the normal technique of division the complexity comes out to be O(logN), but it can be solved using O(v) where v are the number of digits of number in binary form.
 
@@ -95,7 +97,7 @@ return x && (!(x&(x-1)));
 
 
 
-:question: **Print a binary representation of a number**
+## :question: **Print a binary representation of a number**
 
 If you want to print, say, last 20 bits of a number, it's not necessary to write something like.
 
@@ -120,7 +122,7 @@ cout << bitset<20>(n) << "\n";
 
 
 
-:question: **Introducing variables inside an if statement**
+## :question: **Introducing variables inside an if statement**
 
 :a: Imagine the following: you have a function `f()`, which takes time to be computed, and if its value satisfies some condition, you want to somehow use it. You don't want to write.
 
@@ -165,4 +167,21 @@ if (is_good(f())) {
   ```
 
   
+  
+  ## :question: Rotate An array to K times.
+
+:a:  space complexity is O(n) and Time Complexity is also O(n).
+
+```cpp
+    void rotate(vector<int>& nums, int k) {
+        vector<int>res(nums.size());
+        for(int i=0;i<nums.size();i++)
+            // int index = (i+k)%nums.size(); 
+            // K is that point at which we want to rotate/shift array.
+            res[(i+k)%nums.size()]=nums[i];
+        nums=res;
+    }
+```
+
+
 

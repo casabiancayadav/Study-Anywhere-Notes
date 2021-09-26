@@ -10,7 +10,7 @@
 
 ##  Input/Output commands :
 
-```markdown
+```shell
 
 	1# Output :
 	===========
