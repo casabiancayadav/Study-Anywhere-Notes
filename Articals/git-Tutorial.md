@@ -13,7 +13,7 @@
 
 * In simply words suppose you have some cloud storage on online platform like Github.
 * Where you will put your code. Like we do in google Drive where we store our data.(images, Excel files, doc files etc ).
-* ![gitBasic_1](gitImages\gitBasic_1.png)
+* ![gitBasic_1](gitImages/gitBasic_1.png)
 
 
 
@@ -40,7 +40,7 @@
 
 * If you don't have make fresh new account on Github.
 
-* Add new Repository at left Corner. ![Image_1](gitImages\Image_1.png)
+* Add new Repository at left Corner. ![Image_1](gitImages/Image_1.png)
 
   
 
